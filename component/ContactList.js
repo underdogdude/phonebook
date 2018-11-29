@@ -1,5 +1,6 @@
 import React from 'react';
 import { StyleSheet, View, ScrollView } from 'react-native';
+import ImgList from './ImgList'
 import { Container, Header, Content, List, ListItem, Thumbnail, Text, Left, Body, Right, Button, Icon } from 'native-base';
 
 
@@ -37,6 +38,9 @@ export default class ContactList extends React.Component {
         });
 
     }
+    alertTest(){
+        alert('bite');
+    }
 
     render() {
         return ( 
@@ -53,14 +57,16 @@ export default class ContactList extends React.Component {
                                     <Text note numberOfLines={1}>Its time to build a difference . .</Text>
                                 </Body>
                                 <Right>
-                                    <Button transparent>
+                                    <Button onPress={() => this.alertTest()} transparent>
                                         <Text>Call</Text>
                                     </Button>
                                 </Right>
                             </ListItem>
+                            
                         );
                     })
                 }
+                <ImgList Data={this.state.contact} Alert="Hello World" />
                 
             </List>
         );

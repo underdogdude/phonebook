@@ -15,14 +15,38 @@ const dataArray = [
 
 export default class Phonebook extends React.Component {
 
+    constructor(props) {
+        super(props);
+        this.state = {
+            contact: []
+        }
+    }
+
     async componentWillMount() {
         await Expo.Font.loadAsync({
             'Roboto': require('native-base/Fonts/Roboto.ttf'),
             'Roboto_medium': require('native-base/Fonts/Roboto_medium.ttf'),
         });
+
+        let ImgList = [];
+
+        await fetch('https://randomuser.me/api/?results=15&inc=name,picture')
+        .then((response) => response.json())
+        .then((responseJson) => {
+            ImgList = responseJson.results.map((item) => {
+           
+                return ({
+                   
+                    fname: item.name.first,
+                    lname: item.name.last,
+                    img: item.picture.thumbnail
+                }) 
+            })
+            this.setState({
+                contact: ImgList
+            });
+        });
     }
-
-
 
     render() {
         return ( 
@@ -36,9 +60,7 @@ export default class Phonebook extends React.Component {
                     <Text style={{ fontSize: 24, fontWeight: 'bold', paddingTop: 20 }}>
                         Recently
                     </Text>
-                    <ImgList   style={{ paddingTop: 20 }}  />
-
-
+                    <ImgList Data={this.state.contact} style={{ paddingTop: 20 }}  />
                     <Text style={{ fontSize: 24, fontWeight: 'bold', paddingTop: 20 }}> 
                         Contact List 
                     </Text>
